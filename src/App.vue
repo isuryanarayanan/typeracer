@@ -1,22 +1,5 @@
 <template>
   <v-app>
-    <v-app-bar app flat dense id="nav">
-      <div class="font2">
-        typeracer
-      </div>
-      <v-spacer></v-spacer>
-      <div class="font2 px-1">
-        <router-link :to="{ name: 'Home' }">
-          Home
-        </router-link>
-      </div>
-      <div class="font2 px-1">
-        <router-link :to="{ name: 'GetStarted' }">
-          Get Started
-        </router-link>
-      </div>
-    </v-app-bar>
-
     <v-main><router-view></router-view></v-main>
   </v-app>
 </template>
@@ -28,6 +11,9 @@ export default {
   components: {},
 
   data: () => ({}),
+  mounted() {
+    this.$store.dispatch("get_text");
+  },
 };
 </script>
 

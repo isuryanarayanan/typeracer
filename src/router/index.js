@@ -10,11 +10,6 @@ const routes = [
     name: "Home",
     component: Home,
   },
-  {
-    path: "/get-started",
-    name: "GetStarted",
-    component: () => import("../views/GetStarted.vue"),
-  },
 ];
 
 const router = new VueRouter({
