@@ -3,7 +3,14 @@
     <v-row>
       <v-col>
         <v-sheet>
-          <p v-html="type_message.selected_message"></p>
+          <div class="info-field">
+            <v-icon>mdi-access-point</v-icon>
+            The words are random
+          </div>
+          <p class="type-text" v-html="type_message.selected_message"></p>
+          <v-btn small dark @click="$store.dispatch('get_text')"
+            >Get another snippet</v-btn
+          >
         </v-sheet>
       </v-col>
       <v-col>
@@ -12,8 +19,25 @@
             class="input-field"
             :placeholder="type_state.message"
             :disabled="type_state.lock"
+            ref="inpTxt"
           >
           </v-text-field>
+          <div class="info-field" v-show="type_state.flag">
+            <v-icon>mdi-access-point</v-icon>
+            You can start typing
+          </div>
+          <v-btn :disabled="type_state.flag" color="success" @click="start()"
+            >Start
+            <v-icon v-show="type_state.timer">mdi-arrow-right</v-icon>
+
+            <v-progress-circular
+              v-show="!type_state.timer && !type_state.flag"
+              indeterminate
+              color="white"
+              :size="20"
+            ></v-progress-circular>
+            <v-icon v-show="type_state.flag">mdi-pencil</v-icon>
+          </v-btn>
         </v-sheet>
       </v-col>
     </v-row>
@@ -29,11 +53,27 @@ export default {
       type_message: "get_type_message",
     }),
   },
-  methods: {},
+
+  methods: {
+    start: function() {
+      this.$store.dispatch("start");
+      let ref = this.$refs;
+      setTimeout(function() {
+        ref.inpTxt.focus();
+      }, 3010);
+    },
+  },
 };
 </script>
 <style scoped lang="scss">
+.info-field {
+  font-size: 12px;
+  color: #555;
+}
 .input-field {
   font-size: 24px;
+}
+.type-text {
+  font-size: 32px;
 }
 </style>
