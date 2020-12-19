@@ -14,6 +14,7 @@ export default new Vuex.Store({
       validated_input: false,
     },
     type_state: {
+      completed: false,
       lock: true,
       timer: true,
       flag: false,
@@ -59,6 +60,9 @@ export default new Vuex.Store({
     set_validated_input: function(state, arg) {
       state.type_message.validated_input = arg;
     },
+    toggle_complete: function(state) {
+      state.type_state.completed = !state.type_state.completed;
+    },
   },
   actions: {
     get_text: ({ getters, commit }) => {
@@ -95,15 +99,26 @@ export default new Vuex.Store({
         }, 3000);
       }
     },
-    validate: ({ commit, getters }, arg) => {
+    stop: ({ commit, getters }) => {
+      if (getters.get_type_state.flag) {
+        commit("set_type_pure", null);
+        // initiate timer and flag
+        commit("toggle_type_state_timer");
+        commit("toggle_type_state_lock");
+        commit("toggle_type_state_flag");
+      }
+    },
+    validate: ({ commit, getters, dispatch }, arg) => {
       let validateText = arg;
       let pureText = getters.get_type_message.pure_message.split(" ");
       let count = getters.get_type_message.count;
-      console.log(pureText[count] + "/" + validateText + "\\");
       if (pureText[count] == validateText) {
+        if (count == pureText.length - 1) {
+          commit("toggle_complete");
+          dispatch("stop");
+        }
         commit("set_validated_input", true);
       } else {
-        console.log("fucking noob.");
         commit("set_validated_input", false);
       }
 
