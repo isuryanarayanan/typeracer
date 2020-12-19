@@ -1,25 +1,31 @@
 <template>
   <v-container>
     <v-row>
-      <v-col>
+      <v-col cols="12">
         <v-sheet>
           <div class="info-field">
             <v-icon>mdi-access-point</v-icon>
             The words are random
           </div>
           <p class="type-text" v-html="type_message.selected_message"></p>
-          <v-btn small dark @click="$store.dispatch('get_text')"
+          <v-btn
+            small
+            dark
+            @click="$store.dispatch('get_text')"
+            :disabled="type_state.flag"
             >Get another snippet</v-btn
           >
         </v-sheet>
       </v-col>
-      <v-col>
+
+      <v-col cols="6">
         <v-sheet>
           <v-text-field
             class="input-field"
             :placeholder="type_state.message"
             :disabled="type_state.lock"
             ref="inpTxt"
+            v-model="inpTxt"
           >
           </v-text-field>
           <div class="info-field" v-show="type_state.flag">
@@ -40,6 +46,11 @@
           </v-btn>
         </v-sheet>
       </v-col>
+      <v-col cols="6">
+        <p>
+          <v-sheet dark>{{ inpTxt }}</v-sheet>
+        </p>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -47,6 +58,11 @@
 import { mapGetters } from "vuex";
 export default {
   name: "Racer",
+  data() {
+    return {
+      inpTxt: null,
+    };
+  },
   computed: {
     ...mapGetters({
       type_state: "get_type_state",
