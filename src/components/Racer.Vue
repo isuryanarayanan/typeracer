@@ -26,6 +26,7 @@
             :disabled="type_state.lock"
             ref="inpTxt"
             v-model="inpTxt"
+            v-on:input="POOP"
           >
           </v-text-field>
           <div class="info-field" v-show="type_state.flag">
@@ -48,7 +49,7 @@
       </v-col>
       <v-col cols="6">
         <p>
-          <v-sheet dark>{{ inpTxt }}</v-sheet>
+          <v-sheet dark>{{ curTxt }}</v-sheet>
         </p>
       </v-col>
     </v-row>
@@ -61,12 +62,14 @@ export default {
   data() {
     return {
       inpTxt: null,
+      curTxt: null,
     };
   },
   computed: {
     ...mapGetters({
       type_state: "get_type_state",
       type_message: "get_type_message",
+      validated_input: "get_validated_input",
     }),
   },
 
@@ -77,6 +80,21 @@ export default {
       setTimeout(function() {
         ref.inpTxt.focus();
       }, 3010);
+    },
+    POOP: function() {
+      let arg = this.inpTxt;
+      if (arg) {
+        if (arg.substr(arg.length - 1) == " ") {
+          this.$store.commit("increment_count");
+          this.$store.dispatch("validate", arg.substr(0, arg.length - 1));
+          if (this.type_message.validated_input) {
+            this.inpTxt = null;
+          } else {
+            this.$store.commit("decrement_count");
+          }
+        }
+      }
+      this.curTxt = arg;
     },
   },
 };

@@ -8,8 +8,10 @@ export default new Vuex.Store({
     api_endpoint:
       "http://www.randomtext.me/api/gibberish/p-1/25-45?_=1608182114179",
     type_message: {
+      count: -1,
       selected_message: null,
       pure_message: null,
+      validated_input: false,
     },
     type_state: {
       lock: true,
@@ -48,6 +50,15 @@ export default new Vuex.Store({
     set_type_pure: function(state, arg) {
       state.type_message.pure_message = arg;
     },
+    increment_count: function(state) {
+      state.type_message.count++;
+    },
+    decrement_count: function(state) {
+      state.type_message.count--;
+    },
+    set_validated_input: function(state, arg) {
+      state.type_message.validated_input = arg;
+    },
   },
   actions: {
     get_text: ({ getters, commit }) => {
@@ -83,6 +94,20 @@ export default new Vuex.Store({
           commit("toggle_type_state_flag");
         }, 3000);
       }
+    },
+    validate: ({ commit, getters }, arg) => {
+      let validateText = arg;
+      let pureText = getters.get_type_message.pure_message.split(" ");
+      let count = getters.get_type_message.count;
+      console.log(pureText[count] + "/" + validateText + "\\");
+      if (pureText[count] == validateText) {
+        commit("set_validated_input", true);
+      } else {
+        console.log("fucking noob.");
+        commit("set_validated_input", false);
+      }
+
+      // return getters.get_type_message.validated_input;
     },
   },
   modules: {},
