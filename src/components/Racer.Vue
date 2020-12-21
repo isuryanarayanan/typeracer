@@ -49,7 +49,9 @@
       </v-col>
       <v-col cols="6">
         <p>
-          <v-sheet dark>{{ curTxt }}</v-sheet>
+          <v-sheet dark v-show="!this.type_state.completed">{{
+            curTxt
+          }}</v-sheet>
         </p>
       </v-col>
     </v-row>
@@ -79,6 +81,7 @@ export default {
       let ref = this.$refs;
       setTimeout(function() {
         ref.inpTxt.focus();
+        this.inpTxt = null;
       }, 3010);
     },
     POOP: function() {

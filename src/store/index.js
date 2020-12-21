@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     api_endpoint:
-      "http://www.randomtext.me/api/gibberish/p-1/25-45?_=1608182114179",
+      "http://www.randomtext.me/api/gibberish/p-1/5-10?_=1608182114179",
     type_message: {
       count: -1,
       selected_message: null,
@@ -63,6 +63,9 @@ export default new Vuex.Store({
     toggle_complete: function(state) {
       state.type_state.completed = !state.type_state.completed;
     },
+    reset_count: function(state) {
+      state.type_message.count = -1;
+    },
   },
   actions: {
     get_text: ({ getters, commit }) => {
@@ -85,12 +88,10 @@ export default new Vuex.Store({
     start: ({ commit, getters }) => {
       if (!getters.get_type_state.flag) {
         let select = getters.get_type_message;
-        // snipping html elements from the text
         commit(
           "set_type_pure",
           select.selected_message.slice(3, select.selected_message.length - 5)
         );
-        // initiate timer and flag
         commit("toggle_type_state_timer");
 
         setTimeout(function() {
@@ -102,10 +103,11 @@ export default new Vuex.Store({
     stop: ({ commit, getters }) => {
       if (getters.get_type_state.flag) {
         commit("set_type_pure", null);
-        // initiate timer and flag
         commit("toggle_type_state_timer");
         commit("toggle_type_state_lock");
         commit("toggle_type_state_flag");
+        commit("reset_count");
+        commit("toggle_complete");
       }
     },
     validate: ({ commit, getters, dispatch }, arg) => {
@@ -113,16 +115,13 @@ export default new Vuex.Store({
       let pureText = getters.get_type_message.pure_message.split(" ");
       let count = getters.get_type_message.count;
       if (pureText[count] == validateText) {
+        commit("set_validated_input", true);
         if (count == pureText.length - 1) {
-          commit("toggle_complete");
           dispatch("stop");
         }
-        commit("set_validated_input", true);
       } else {
         commit("set_validated_input", false);
       }
-
-      // return getters.get_type_message.validated_input;
     },
   },
   modules: {},
