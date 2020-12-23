@@ -77,6 +77,7 @@ export default {
   },
 
   methods: {
+    // Start button call
     start: function() {
       this.$store.dispatch("start");
       let ref = this.$refs;
@@ -85,15 +86,14 @@ export default {
         this.inpTxt = null;
       }, 3010);
     },
+    // Game logic and controller
     POOP: function() {
       let arg = this.inpTxt;
       if (arg) {
         let pureText = this.type_message.pure_message.split(" ");
-
         this.type_message.count + 1 == pureText.length - 1
           ? (this.charCheckFor = ".")
           : (this.charCheckFor = " ");
-
         if (arg.substr(arg.length - 1) == this.charCheckFor) {
           this.$store.commit("increment_count");
           this.charCheckFor == "."

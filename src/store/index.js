@@ -13,6 +13,18 @@ export default new Vuex.Store({
       pure_message: null,
       validated_input: false,
     },
+
+    games: [
+      {
+        gameId: 0,
+        gameText: null,
+        wpm: 0,
+        gameTimer: {
+          start: Date.now(),
+          end: Date.now(),
+        },
+      },
+    ],
     type_state: {
       completed: false,
       lock: true,
@@ -97,6 +109,7 @@ export default new Vuex.Store({
         setTimeout(function() {
           commit("toggle_type_state_lock");
           commit("toggle_type_state_flag");
+          // Start the timer.
         }, 3000);
       }
     },
