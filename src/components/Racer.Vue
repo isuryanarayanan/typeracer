@@ -65,6 +65,7 @@ export default {
     return {
       inpTxt: null,
       curTxt: null,
+      charCheckFor: " ",
     };
   },
   computed: {
@@ -87,11 +88,22 @@ export default {
     POOP: function() {
       let arg = this.inpTxt;
       if (arg) {
-        if (arg.substr(arg.length - 1) == " ") {
+        let pureText = this.type_message.pure_message.split(" ");
+
+        this.type_message.count + 1 == pureText.length - 1
+          ? (this.charCheckFor = ".")
+          : (this.charCheckFor = " ");
+
+        if (arg.substr(arg.length - 1) == this.charCheckFor) {
           this.$store.commit("increment_count");
-          this.$store.dispatch("validate", arg.substr(0, arg.length - 1));
+          this.charCheckFor == "."
+            ? this.$store.dispatch("validate", arg.substr(0, arg.length))
+            : this.$store.dispatch("validate", arg.substr(0, arg.length - 1));
           if (this.type_message.validated_input) {
             this.inpTxt = null;
+            if (this.charCheckFor == ".") {
+              this.charCheckFor = " ";
+            }
           } else {
             this.$store.commit("decrement_count");
           }
