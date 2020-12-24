@@ -19,6 +19,7 @@ export default new Vuex.Store({
         gameId: 0,
         gameText: null,
         wpm: 0,
+        cpm: 0,
         gameTimer: {
           start: Date.now(),
           end: Date.now(),
@@ -26,6 +27,7 @@ export default new Vuex.Store({
       },
     ],
     type_state: {
+      current_id: null,
       completed: false,
       lock: true,
       timer: true,
@@ -36,6 +38,9 @@ export default new Vuex.Store({
   getters: {
     get_api_endpoint: (state) => {
       return state.api_endpoint;
+    },
+    get_games: (state) => {
+      return state.games;
     },
     get_type_state: (state) => {
       return state.type_state;
@@ -78,6 +83,18 @@ export default new Vuex.Store({
     reset_count: function(state) {
       state.type_message.count = -1;
     },
+    set_current_id: function(state, arg) {
+      state.type_state.current_id = arg;
+    },
+    start_timer: function(state, arg) {
+      state.games[arg].gameTimer.start = Date.now();
+    },
+    stop_timer: function(state, arg) {
+      state.games[arg].gameTimer.end = Date.now();
+    },
+    add_game: function(state, arg) {
+      state.games.push(arg);
+    },
   },
   actions: {
     get_text: ({ getters, commit }) => {
@@ -99,28 +116,50 @@ export default new Vuex.Store({
     },
     start: ({ commit, getters }) => {
       if (!getters.get_type_state.flag) {
+        // Create game instance, and generate id.
         let select = getters.get_type_message;
+
+        let gameId = getters.get_games.length;
+        commit("add_game", {
+          gameId: gameId,
+          gameText: select.selected_message.slice(
+            3,
+            select.selected_message.length - 5
+          ),
+          wpm: 0,
+          cpm: 0,
+          gameTimer: {
+            start: Date.now(),
+            end: Date.now(),
+          },
+        });
         commit(
           "set_type_pure",
           select.selected_message.slice(3, select.selected_message.length - 5)
         );
+        commit("set_current_id", gameId);
         commit("toggle_type_state_timer");
 
         setTimeout(function() {
           commit("toggle_type_state_lock");
           commit("toggle_type_state_flag");
-          // Start the timer.
+          commit("start_timer", gameId);
         }, 3000);
       }
     },
     stop: ({ commit, getters }) => {
       if (getters.get_type_state.flag) {
+        commit("stop_timer", getters.get_type_state.current_id);
         commit("set_type_pure", null);
         commit("toggle_type_state_timer");
         commit("toggle_type_state_lock");
         commit("toggle_type_state_flag");
         commit("reset_count");
         commit("toggle_complete");
+        let re =
+          getters.get_games[getters.get_type_state.current_id].gameTimer.end -
+          getters.get_games[getters.get_type_state.current_id].gameTimer.start;
+        console.log(re / 60 / 60);
       }
     },
     validate: ({ commit, getters, dispatch }, arg) => {
