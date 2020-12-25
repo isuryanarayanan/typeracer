@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     api_endpoint:
-      "http://www.randomtext.me/api/gibberish/p-1/5-10?_=1608182114179",
+      "http://www.randomtext.me/api/gibberish/p-1/10-15?_=1608182114179",
     type_message: {
       count: -1,
       selected_message: null,
@@ -157,9 +157,16 @@ export default new Vuex.Store({
         commit("reset_count");
         commit("toggle_complete");
         let re =
-          getters.get_games[getters.get_type_state.current_id].gameTimer.end -
-          getters.get_games[getters.get_type_state.current_id].gameTimer.start;
-        console.log(re / 60 / 60);
+          (getters.get_games[getters.get_type_state.current_id].gameTimer.end -
+            getters.get_games[getters.get_type_state.current_id].gameTimer
+              .start) /
+          1000;
+        console.log(re);
+        let rn =
+          getters.get_games[getters.get_type_state.current_id].gameText.length;
+        console.log(rn);
+        let wpm = (((rn / re) * 60) / 5) * 60;
+        console.log(wpm);
       }
     },
     validate: ({ commit, getters, dispatch }, arg) => {
