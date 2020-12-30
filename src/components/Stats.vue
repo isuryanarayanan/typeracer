@@ -1,6 +1,6 @@
 <template>
     <v-container class="stats-container">
-        <v-simple-table>
+        <v-simple-table dark>
             <thead>
                 <tr>
                     <th class="text-left">
@@ -17,7 +17,6 @@
                     <td>{{ item.gameId }}</td>
                     <td>{{ item.gameText }}</td>
                     <td>{{ item.wpm }}</td>
-
                 </tr>
             </tbody>
         </v-simple-table>
