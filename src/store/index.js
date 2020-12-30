@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     api_endpoint:
-      "http://www.randomtext.me/api/gibberish/p-1/10-15?_=1608182114179",
+      "http://www.randomtext.me/api/gibberish/p-1/25-35?_=1608182114179",
     type_message: {
       count: -1,
       selected_message: null,
@@ -95,6 +95,9 @@ export default new Vuex.Store({
     add_game: function(state, arg) {
       state.games.push(arg);
     },
+    set_wpm: function(state,arg){
+        state.games[arg.arg].wpm = arg.wpm;
+    }
   },
   actions: {
     get_text: ({ getters, commit }) => {
@@ -161,12 +164,13 @@ export default new Vuex.Store({
             getters.get_games[getters.get_type_state.current_id].gameTimer
               .start) /
           1000;
-        console.log(re);
+        console.log("you took "+re+" seconds.");
         let rn =
           getters.get_games[getters.get_type_state.current_id].gameText.length;
-        console.log(rn);
-        let wpm = (((rn / re) * 60) / 5) * 60;
-        console.log(wpm);
+        let wpm = (rn/5)*re/60;
+        console.log("this is your words per minute :"+wpm);
+        commit("set_wpm",{wpm:wpm,arg:getters.get_type_state.current_id});
+        console.log(getters.get_games[getters.get_type_state.current_id]);
       }
     },
     validate: ({ commit, getters, dispatch }, arg) => {

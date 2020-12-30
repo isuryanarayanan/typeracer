@@ -1,5 +1,5 @@
-<template>
-  <v-container>
+<template> 
+<v-container>
     <v-row>
       <v-col cols="12">
         <v-sheet>
@@ -81,10 +81,12 @@ export default {
     start: function() {
       this.$store.dispatch("start");
       let ref = this.$refs;
+      
+      
       setTimeout(function() {
         ref.inpTxt.focus();
         this.inpTxt = null;
-      }, 3010);
+      }, 3010); 
     },
     // Game logic and controller
     POOP: function() {
