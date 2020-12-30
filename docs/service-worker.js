@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.05bf913bb53f3649c5ede3ddd8edde3e.js"
+  "/my-project/precache-manifest.f170bd2728fb449eb7bd643a2fba9ff6.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "typeracer"});
