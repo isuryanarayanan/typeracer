@@ -14,18 +14,7 @@ export default new Vuex.Store({
       validated_input: false,
     },
 
-    games: [
-      {
-        gameId: 0,
-        gameText: null,
-        wpm: 0,
-        cpm: 0,
-        gameTimer: {
-          start: Date.now(),
-          end: Date.now(),
-        },
-      },
-    ],
+    games: [],
     type_state: {
       current_id: null,
       completed: false,

@@ -34,7 +34,7 @@
                 <v-tab-item>
                   <Racer />
                 </v-tab-item>
-                <v-tab-item> </v-tab-item>
+                <v-tab-item><Stats /></v-tab-item>
                 <v-tab-item> </v-tab-item>
               </v-tabs-items>
             </v-tabs>
@@ -47,9 +47,10 @@
 
 <script>
 import Racer from "../components/Racer.vue";
+import Stats from "../components/Stats.vue";
 export default {
   name: "Home",
-  components: { Racer },
+  components: { Racer,Stats },
   data() {
     return {
       tabs: null,
