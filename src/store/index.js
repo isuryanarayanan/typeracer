@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     api_endpoint:
-      "http://www.randomtext.me/api/gibberish/p-1/25-35?_=1608182114179",
+      "https://www.randomtext.me/api/gibberish/p-1/25-35?_=1608182114179",
     type_message: {
       count: -1,
       selected_message: null,

@@ -1,5 +1,8 @@
 # typeracer
 
+> deployed : https://isuryanarayanan.github.io/typeracer/
+
+
 ## Project setup
 ```
 npm install
