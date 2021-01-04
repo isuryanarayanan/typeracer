@@ -13,6 +13,7 @@ export default {
   data: () => ({}),
   mounted() {
     this.$store.dispatch("get_text");
+    this.$store.dispatch("load");
   },
 };
 </script>
