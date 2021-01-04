@@ -19,7 +19,6 @@
             ></v-img>
           </template>
 
-          <v-app-bar-nav-icon @click="open"></v-app-bar-nav-icon>
 
           <v-toolbar-title class="display-2">Typeracer</v-toolbar-title>
 
@@ -29,13 +28,11 @@
             <v-tabs v-model="tabs">
               <v-tab>Play</v-tab>
               <v-tab>Stats</v-tab>
-              <v-tab>Practice</v-tab>
               <v-tabs-items v-model="tabs">
                 <v-tab-item>
                   <Racer />
                 </v-tab-item>
                 <v-tab-item><Stats /></v-tab-item>
-                <v-tab-item> </v-tab-item>
               </v-tabs-items>
             </v-tabs>
           </template>
