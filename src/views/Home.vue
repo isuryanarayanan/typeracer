@@ -20,7 +20,7 @@
           </template>
 
 
-          <v-toolbar-title class="display-2">Typeracer</v-toolbar-title>
+          <v-toolbar-title class="display-2">typeracer</v-toolbar-title>
 
           <v-spacer></v-spacer>
 
