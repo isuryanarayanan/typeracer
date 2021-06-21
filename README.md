@@ -1,27 +1,33 @@
 # typeracer
 
-> deployed : https://isuryanarayanan.github.io/typeracer/
+> Deprecated
 
+> deployed (Dependent api down): https://isuryanarayanan.github.io/typeracer/
 
 ## Project setup
+
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
